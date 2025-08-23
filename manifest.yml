@@ -1,0 +1,27 @@
+name: Sousous
+package: lazycat.community.app.sousous
+version: 1.3.4
+min_os_version: 1.3.8
+description: "Simple, local-first expense tracker"
+homepage: https://codeberg.org/tdelorge/sousous
+author: tdelorge
+application:
+    subdomain: sousous
+    background_task: true
+    public_path:
+        - /
+    upstreams:
+        - location: /
+          backend: http://sousous:5000
+services:
+    sousous:
+        # codeberg.org/tdelorge/sousous:v1.3.4-staging
+        image: registry.lazycat.cloud/czyt/tdelorge/sousous:887e1df11acd6139
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Asia/Shanghai
+            - FLASK_SECRET_KEY={{stable_secret "sousous_encryption_x" }}
+            - FLASK_COOKIE_SECUREtrue
+        binds:
+            - /lzcapp/var/config:/app/config
