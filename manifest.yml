@@ -22,6 +22,10 @@ services:
             - PGID=1000
             - TZ=Asia/Shanghai
             - FLASK_SECRET_KEY={{stable_secret "sousous_encryption_x" }}
-            - FLASK_COOKIE_SECUREtrue
+            - FLASK_COOKIE_SECURE=true
         binds:
-            - /lzcapp/var/config:/app/config
+            - /lzcapp/var/db:/app/src/db
+        setup_script: |
+            echo "Setup complete"
+            mkdir -p /app/src/db
+            touch /app/src/db/database.db
