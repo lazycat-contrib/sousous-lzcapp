@@ -28,4 +28,6 @@ services:
         setup_script: |
             echo "Setup complete"
             mkdir -p /app/src/db
-            touch /app/src/db/database.db
+            if [ ! -f /app/src/db/database.db ];then
+             touch /app/src/db/database.db
+            fi
