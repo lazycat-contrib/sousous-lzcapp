@@ -6,11 +6,10 @@ application:
   upstreams:
     - location: /
       backend: http://sousous:5000
-
 services:
   sousous:
     # upstream: codeberg.org/tdelorge/sousous:v1.3.5.2
-    image: codeberg.org/tdelorge/sousous:v1.3.5.2
+    image: registry.lazycat.cloud/czyt/tdelorge/sousous:5c68c1175aacf7a4
     environment:
       - PUID=1000
       - PGID=1000

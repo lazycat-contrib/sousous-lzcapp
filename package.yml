@@ -1,5 +1,5 @@
 package: lazycat.community.app.sousous
-version: 1.3.4
+version: 1.3.5
 name: Sousous
 description: "Simple, local-first expense tracker"
 min_os_version: "1.5.0"
