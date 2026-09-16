@@ -1,0 +1,40 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: .lazycat-build/sousous.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: sousous
+build:
+  run_buildscript: false
+images:
+  # 上游 codeberg 容器注册表：tag 为 vX.Y.Z / vX.Y.Z.W（无 4 段或带后缀的映射到 3 段版本）
+  - id: sousous
+    target: service
+    service: sousous
+    source: codeberg.org/tdelorge/sousous
+    channel: custom
+    sort: semver
+    tag_regex: '^v\d+\.\d+\.\d+(\.\d+)?$'
+    version_regex: '^v(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(\.(?P<fourth>\d+))?$'
+    version_template: '{major}.{minor}.{patch}'
+    delivery:
+      mode: lazycat
+stores:
+  official:
+    enabled: true
+    skip_if_version_exists: true
+    changelog_locales: [zh, en]
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: Sousous
+    summary: "一个简单、本地优先的记账应用"

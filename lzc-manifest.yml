@@ -1,0 +1,27 @@
+application:
+  subdomain: sousous
+  background_task: true
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: http://sousous:5000
+
+services:
+  sousous:
+    # upstream: codeberg.org/tdelorge/sousous:v1.3.5.2
+    image: codeberg.org/tdelorge/sousous:v1.3.5.2
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - FLASK_SECRET_KEY={{stable_secret "sousous_encryption_x" }}
+      - FLASK_COOKIE_SECURE=true
+    binds:
+      - /lzcapp/var/db:/app/src/db
+    setup_script: |
+      echo "Setup complete"
+      mkdir -p /app/src/db
+      if [ ! -f /app/src/db/database.db ];then
+       touch /app/src/db/database.db
+      fi
